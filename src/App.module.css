@@ -1,11 +1,15 @@
-.container{
-    padding: 1rem;
+.container {
+	padding: 1rem;
 }
 
-.header{
-    font-size: 3rem;
+.header {
+	font-size: 3rem;
+	margin: 0;
 }
 
-.formContainer{
-    
+.formContainer {
+}
+
+.selector {
+	font-size: 1rem;
 }
