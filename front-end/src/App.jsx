@@ -2,16 +2,17 @@ import { useState } from "react";
 import axios from "axios";
 import classes from "./App.module.css";
 
-import GenusSearch from "./components/genusSearch";
-import FamilySearch from "./components/familySearch";
+import Search from "./components/Search";
 import NameSearch from "./components/nameSearch";
+const optionsFamily = ["family1", "family2", "family3"];
+const optionsGenus = ["family1", "family2", "family3"];
 
 function App() {
 	const [error, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [filterType, setFilterType] = useState("family");
-	const [family, setFamily] = useState("");
-	const [genus, setGenus] = useState("");
+	const [family, setFamily] = useState(optionsFamily[0]);
+	const [genus, setGenus] = useState(optionsGenus[0]);
 	const [fruitName, setFruitName] = useState("");
 	const [data, setData] = useState({});
 
@@ -31,16 +32,18 @@ function App() {
 		setFruitName(event.target.value);
 	};
 
-	const handleCall = () => {
+	const handleCall = (event) => {
+		event.preventDefault();
 		setIsLoading(true);
-		let url = "https://www.fruityvice.com/";
+		let url = "http://localhost:3000/" + filterType + "/";
 		if (filterType === "family") {
-			url += "api/fruit/family/" + family;
+			url += family;
 		} else if (filterType === "genus") {
-			url += "api/fruit/genus/" + genus;
+			url += genus;
 		} else if (filterType === "name") {
-			url += "api/fruit/" + fruitName;
+			url += fruitName;
 		}
+		console.log(url);
 		axios
 			.get(url)
 			.then((response) => {
@@ -76,41 +79,41 @@ function App() {
 			<h1 className={classes.header}>Fruit data search</h1>
 			<p>Made by Oskar Adolfo Villa López. Data from FruityVice API.</p>
 			<section className={classes.formContainer}>
-				<div>
-					<label>Filter by: </label>
-					<select
-						value={filterType}
-						onChange={handleFilterType}
-						className={classes.selector}
-					>
-						<option value="family">Family</option>
-						<option value="genus">Genus</option>
-						<option value="name">Name</option>
-					</select>
-				</div>
-				<div>
-					{filterType === "family" && (
-						<FamilySearch family={family} handleFamily={handleFamily} />
-					)}
-					{filterType === "genus" && (
-						<GenusSearch genus={genus} handleGenus={handleGenus} />
-					)}
-					{filterType === "name" && (
-						<NameSearch
-							fruitName={fruitName}
-							handleFruitName={handleFruitName}
-						/>
-					)}
-				</div>
+				<form className={classes.formContainer} onSubmit={handleCall}>
+					<div>
+						<label>Filter by: </label>
+						<select
+							value={filterType}
+							onChange={handleFilterType}
+							className={classes.selector}
+						>
+							<option value="family">Family</option>
+							<option value="genus">Genus</option>
+							<option value="name">Name</option>
+						</select>
+					</div>
+					<div>
+						{filterType === "family" && (
+							<Search value={family} handleChange={handleFamily} options={optionsFamily} />
+						)}
+						{filterType === "genus" && (
+							<Search value={genus} handleChange={handleGenus} options={optionsGenus}/>
+						)}
+						{filterType === "name" && (
+							<NameSearch
+								fruitName={fruitName}
+								handleFruitName={handleFruitName}
+							/>
+						)}
+					</div>
 
-				<button
-					disabled={isLoading}
-					className={classes.btn}
-					onClick={handleCall}
-				>
-					{!isLoading && "Search"}
-					{isLoading && "Loading..."}
-				</button>
+					<input
+						disabled={isLoading}
+						className={classes.btn}
+						type="submit"
+						value={(!isLoading && "Search") || (isLoading && "Loading...")}
+					></input>
+				</form>
 				{error !== "" && <p className={classes.error}>{error}</p>}
 			</section>
 		</main>
