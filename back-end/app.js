@@ -1,9 +1,15 @@
 const axios = require("axios");
+const cors = require("cors");
 const express = require("express");
 const app = express();
 const port = 3000;
 
-app.get("/:filterType/:keyword", (req, res) => {
+const corsOptions = {
+	origin: "http://localhost",
+	optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.get("/:filterType/:keyword", cors(), (req, res) => {
 	let url = "https://www.fruityvice.com/api/";
 	console.log(req.params.filterType);
 	console.log(req.params.keyword);
@@ -21,7 +27,10 @@ app.get("/:filterType/:keyword", (req, res) => {
 			res.send(response.data);
 		})
 		.catch((error) => {
-			res.send(error);
+			if (error.response) {
+				// Server responded with error
+				res.status(404).send();
+			}
 		});
 });
 
