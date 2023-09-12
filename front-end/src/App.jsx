@@ -8,6 +8,7 @@ const optionsFamily = ["family1", "family2", "family3"];
 const optionsGenus = ["family1", "family2", "family3"];
 
 function App() {
+	// Function states
 	const [error, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [filterType, setFilterType] = useState("family");
@@ -15,6 +16,12 @@ function App() {
 	const [genus, setGenus] = useState(optionsGenus[0]);
 	const [fruitName, setFruitName] = useState("");
 	const [data, setData] = useState({});
+	const [fileName, setFileName] = useState("");
+
+	// State change handlers
+	const handleFileName = (event) => {
+		setFileName(event.target.value);
+	};
 
 	const handleFilterType = (event) => {
 		setFilterType(event.target.value);
@@ -32,6 +39,7 @@ function App() {
 		setFruitName(event.target.value);
 	};
 
+	// Backend call
 	const handleCall = (event) => {
 		event.preventDefault();
 		setIsLoading(true);
@@ -43,13 +51,11 @@ function App() {
 		} else if (filterType === "name") {
 			url += fruitName;
 		}
-		console.log(url);
 		axios
 			.get(url)
 			.then((response) => {
 				setError("");
 				setData(response.data);
-				console.log(data);
 			})
 			.catch((error) => {
 				if (error.response) {
@@ -74,6 +80,12 @@ function App() {
 			});
 	};
 
+	// Function to download file
+	const downloadFile = (event) => {
+		event.preventDefault();
+	};
+
+	// Render
 	return (
 		<main className={classes.container}>
 			<h1 className={classes.header}>Fruit data search</h1>
@@ -94,10 +106,18 @@ function App() {
 					</div>
 					<div>
 						{filterType === "family" && (
-							<Search value={family} handleChange={handleFamily} options={optionsFamily} />
+							<Search
+								value={family}
+								handleChange={handleFamily}
+								options={optionsFamily}
+							/>
 						)}
 						{filterType === "genus" && (
-							<Search value={genus} handleChange={handleGenus} options={optionsGenus}/>
+							<Search
+								value={genus}
+								handleChange={handleGenus}
+								options={optionsGenus}
+							/>
 						)}
 						{filterType === "name" && (
 							<NameSearch
@@ -115,6 +135,22 @@ function App() {
 					></input>
 				</form>
 				{error !== "" && <p className={classes.error}>{error}</p>}
+				{!error && Object.keys(data).length !== 0 && (
+					<form onSubmit={downloadFile}>
+						<label>File name: </label>
+						<input
+							type="text"
+							value={fileName}
+							onChange={handleFileName}
+							className={classes.input}
+						></input>
+						<input
+							className={classes.btn}
+							type="submit"
+							value="Download CSV"
+						></input>
+					</form>
+				)}
 			</section>
 		</main>
 	);
