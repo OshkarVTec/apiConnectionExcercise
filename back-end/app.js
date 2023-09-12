@@ -24,7 +24,12 @@ app.get("/:filterType/:keyword", cors(), (req, res) => {
 	axios
 		.get(url)
 		.then((response) => {
-			res.send(response.data);
+            if (Array.isArray(response.data)){
+                res.send(response.data);
+            }
+            else{
+                res.send([response.data]);
+            }
 		})
 		.catch((error) => {
 			if (error.response) {
