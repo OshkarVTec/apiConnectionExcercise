@@ -13,7 +13,7 @@ function App() {
 	const [family, setFamily] = useState("");
 	const [genus, setGenus] = useState("");
 	const [fruitName, setFruitName] = useState("");
-  const [data, setData] = useState({});
+	const [data, setData] = useState({});
 
 	const handleFilterType = (event) => {
 		setFilterType(event.target.value);
@@ -45,10 +45,10 @@ function App() {
 			.get(url)
 			.then((response) => {
 				setError("");
-        setData(response.data);
-        console.log(data);
+				setData(response.data);
+				console.log(data);
 			})
-			.catch(() => {
+			.catch((error) => {
 				if (error.response) {
 					// Server responded with error
 					console.log(error.response.data);
