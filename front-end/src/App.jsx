@@ -4,7 +4,7 @@ import classes from "./App.module.css";
 
 import Search from "./components/Search";
 import NameSearch from "./components/nameSearch";
-const optionsFamily = ["family1", "family2", "family3"];
+const optionsFamily = ["Musaceae", "Rosaceae", "family3"];
 const optionsGenus = ["family1", "family2", "family3"];
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
 	const [genus, setGenus] = useState(optionsGenus[0]);
 	const [fruitName, setFruitName] = useState("");
 	const [data, setData] = useState({});
-	const [fileName, setFileName] = useState("");
+	const [fileName, setFileName] = useState("data");
 
 	// State change handlers
 	const handleFileName = (event) => {
@@ -80,10 +80,8 @@ function App() {
 			});
 	};
 
-	// Function to download file
-	const downloadFile = (event) => {
-		event.preventDefault();
-	};
+	// Convert and download
+	const downloadFile = () => {};
 
 	// Render
 	return (
@@ -136,20 +134,21 @@ function App() {
 				</form>
 				{error !== "" && <p className={classes.error}>{error}</p>}
 				{!error && Object.keys(data).length !== 0 && (
-					<form onSubmit={downloadFile}>
-						<label>File name: </label>
-						<input
-							type="text"
-							value={fileName}
-							onChange={handleFileName}
-							className={classes.input}
-						></input>
-						<input
-							className={classes.btn}
-							type="submit"
-							value="Download CSV"
-						></input>
-					</form>
+					<>
+						{" "}
+						<div>
+							<label>File name: </label>
+							<input
+								className={classes.input}
+								type="text"
+								value={fileName}
+								onChange={handleFileName}
+							></input>
+						</div>
+						<button className={classes.btn} onClick={downloadFile}>
+							Download CSV
+						</button>
+					</>
 				)}
 			</section>
 		</main>
