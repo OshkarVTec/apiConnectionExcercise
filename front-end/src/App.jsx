@@ -1,9 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
 import classes from "./App.module.css";
+import CsvDownloadButton from "react-json-to-csv";
 
 import Search from "./components/Search";
 import NameSearch from "./components/nameSearch";
+
 const optionsFamily = ["Musaceae", "Rosaceae", "family3"];
 const optionsGenus = ["family1", "family2", "family3"];
 
@@ -80,9 +82,6 @@ function App() {
 			});
 	};
 
-	// Convert and download
-	const downloadFile = () => {};
-
 	// Render
 	return (
 		<main className={classes.container}>
@@ -145,9 +144,11 @@ function App() {
 								onChange={handleFileName}
 							></input>
 						</div>
-						<button className={classes.btn} onClick={downloadFile}>
-							Download CSV
-						</button>
+						<CsvDownloadButton
+							className={classes.btn}
+							filename={fileName}
+							data={data}
+						/>
 					</>
 				)}
 			</section>
