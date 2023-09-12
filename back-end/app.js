@@ -4,9 +4,16 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-const corsOptions = {
-	origin: "http://localhost",
-	optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+// Code from : https://www.tutorialspoint.com/flattening-a-json-object-in-javascript
+const flattenJSON = (obj = {}, res = {}, extraKey = "") => {
+	for (key in obj) {
+		if (typeof obj[key] !== "object") {
+			res[extraKey + key] = obj[key];
+		} else {
+			flattenJSON(obj[key], res, `${extraKey}${key}.`);
+		}
+	}
+	return res;
 };
 
 app.get("/:filterType/:keyword", cors(), (req, res) => {
@@ -24,12 +31,11 @@ app.get("/:filterType/:keyword", cors(), (req, res) => {
 	axios
 		.get(url)
 		.then((response) => {
-            if (Array.isArray(response.data)){
-                res.send(response.data);
-            }
-            else{
-                res.send([response.data]);
-            }
+			if (Array.isArray(response.data)) {
+				res.send(response.data.map((json) => flattenJSON(json)));
+			} else {
+				res.send([flattenJSON(response.data)]);
+			}
 		})
 		.catch((error) => {
 			if (error.response) {
