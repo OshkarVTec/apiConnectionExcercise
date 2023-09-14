@@ -15,12 +15,27 @@
 
 .selector {
 	font-size: 1rem;
+	width: 50%;
 }
 
 .btn {
 	font-size: 1rem;
 }
 
-.input {
+.inputContainer {
+	width: 50%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.input{
 	font-size: 1rem;
+	width: 50%;
+}
+
+.download{
+	margin-top: 5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
 }

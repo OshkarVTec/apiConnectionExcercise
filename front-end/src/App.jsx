@@ -86,10 +86,14 @@ function App() {
 	return (
 		<main className={classes.container}>
 			<h1 className={classes.header}>Fruit data search</h1>
-			<p>Made by Oskar Adolfo Villa López. Data from FruityVice API.</p>
+			<p>Made by Oskar Adolfo Villa López. Data from FruityVice API. </p>
+			<p>
+				Select your filter and click <i>Search</i>. Then type your file name and
+				click <i>Download Data</i> to download a CSV file
+			</p>
 			<section className={classes.formContainer}>
 				<form className={classes.formContainer} onSubmit={handleCall}>
-					<div>
+					<div className={classes.inputContainer}>
 						<label>Filter by: </label>
 						<select
 							value={filterType}
@@ -101,7 +105,7 @@ function App() {
 							<option value="name">Name</option>
 						</select>
 					</div>
-					<div>
+					<div className={classes.inputContainer}>
 						{filterType === "family" && (
 							<Search
 								value={family}
@@ -133,9 +137,9 @@ function App() {
 				</form>
 				{error !== "" && <p className={classes.error}>{error}</p>}
 				{!error && Object.keys(data).length !== 0 && (
-					<>
+					<form className={classes.download}>
 						{" "}
-						<div>
+						<div className={classes.inputContainer}>
 							<label>File name: </label>
 							<input
 								className={classes.input}
@@ -149,7 +153,7 @@ function App() {
 							filename={fileName}
 							data={data}
 						/>
-					</>
+					</form>
 				)}
 			</section>
 		</main>
