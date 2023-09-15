@@ -6,8 +6,64 @@ import CsvDownloadButton from "react-json-to-csv";
 import Search from "./components/Search";
 import NameSearch from "./components/nameSearch";
 
-const optionsFamily = ["Musaceae", "Rosaceae", "family3"];
-const optionsGenus = ["family1", "family2", "family3"];
+const optionsFamily = [
+	"Ebenaceae",
+	"Rosaceae",
+	"Musaceae",
+	"Solanaceae",
+	"Malvaceae",
+	"Ericaceae",
+	"Actinidiaceae",
+	"Sapindaceae",
+	"Bromeliaceae",
+	"Moraceae",
+	"Grossulariaceae",
+	"Passifloraceae",
+	"Rutaceae",
+	"Cucurbitaceae",
+	"Anacardiaceae",
+	"Myrtaceae",
+	"Caricaceae",
+	"Cactaceae",
+	"Lythraceae",
+	"Vitaceae",
+	"Lauraceae",
+	"Betulaceae",
+];
+const optionsGenus = [
+	"Diospyros",
+	"Fragaria",
+	"Musa",
+	"Solanum",
+	"Pyrus",
+	"Durio",
+	"Rubus",
+	"Vaccinium",
+	"Apteryx",
+	"Litchi",
+	"Ananas",
+	"Ficus",
+	"Ribes",
+	"Passiflora",
+	"Prunus",
+	"Citrus",
+	"Malus",
+	"Citrullus",
+	"Mangifera",
+	"Psidium",
+	"Carica",
+	"Cucumis",
+	"Cactaceae",
+	"Punica",
+	"Selenicereus",
+	"Vitis",
+	"Morus",
+	"Sellowiana",
+	"Persea",
+	"Actinidia",
+	"Artocarpus",
+	"Corylus",
+];
 
 function App() {
 	// Function states
