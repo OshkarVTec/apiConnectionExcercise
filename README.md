@@ -1,9 +1,11 @@
 # apiConnectionExcercise
 A web app that connects to an API to fectch data.\
 Type the following commands to run:\
- ```ćd back-end ```\
+ ```cd back-end ```\
  ```npm install ```\
  ```node app.js ```\
+
+ Then, on another terminal window, run the following commands:
  ```cd .. ```\
  ```cd front-end ```\
  ```npm install ```\
